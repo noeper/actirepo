@@ -10,6 +10,7 @@ from actirepo.moodle.truefalse import TrueFalse
 from actirepo.moodle.ddimageortext import DDImageOrText
 from actirepo.moodle.ddmarker import DDMarker
 from actirepo.moodle.essay import Essay
+from actirepo.moodle.cloze import Cloze
 from actirepo.moodle.stats import Stats
 
 class Quiz():
@@ -43,6 +44,10 @@ class Quiz():
             'class': Essay,
             'description': 'Ensayo'
         },
+        'cloze': {
+            'class': Cloze,
+            'description': 'Respuestas anidadas (Cloze)'
+        },
         #'numerical': {
         #    'class', Numeric,
         #    'description': 'Numérico'
@@ -50,11 +55,12 @@ class Quiz():
         #'matching': {
         #    'class': Matching,
         #    'description': 'Emparejamiento'
-        #},
-        #'cloze': {
-        #    'class': Cloze,
-        #    'description': 'Asociar'
         #}
+    }
+
+    # other names used for the same question type
+    QUESTION_ALIASES = {
+        'multianswer': 'cloze'
     }
 
     def __init__(self, quizfile):
@@ -79,6 +85,7 @@ class Quiz():
         for element in self.root.findall('question'):
             # get question type
             type = element.get('type')
+            type = self.QUESTION_ALIASES.get(type, type)
             # skip if question type is not supported
             if not type in self.SUPPORTED_QUESTIONS.keys():
                 continue
