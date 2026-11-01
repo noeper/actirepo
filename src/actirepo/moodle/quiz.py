@@ -11,6 +11,12 @@ from actirepo.moodle.ddimageortext import DDImageOrText
 from actirepo.moodle.ddmarker import DDMarker
 from actirepo.moodle.essay import Essay
 from actirepo.moodle.cloze import Cloze
+from actirepo.moodle.matching import Matching
+from actirepo.moodle.numerical import Numerical
+from actirepo.moodle.ddwtos import DDWtoS
+from actirepo.moodle.gapselect import GapSelect
+from actirepo.moodle.ordering import Ordering
+from actirepo.moodle.description import Description
 from actirepo.moodle.stats import Stats
 
 class Quiz():
@@ -48,14 +54,30 @@ class Quiz():
             'class': Cloze,
             'description': 'Respuestas anidadas (Cloze)'
         },
-        #'numerical': {
-        #    'class', Numeric,
-        #    'description': 'Numérico'
-        #},
-        #'matching': {
-        #    'class': Matching,
-        #    'description': 'Emparejamiento'
-        #}
+        'numerical': {
+            'class': Numerical,
+            'description': 'Numérico'
+        },
+        'matching': {
+            'class': Matching,
+            'description': 'Emparejamiento'
+        },
+        'ddwtos': {
+            'class': DDWtoS,
+            'description': 'Arrastrar y soltar sobre texto'
+        },
+        'gapselect': {
+            'class': GapSelect,
+            'description': 'Seleccionar palabras faltantes'
+        },
+        'ordering': {
+            'class': Ordering,
+            'description': 'Ordenación'
+        },
+        'description': {
+            'class': Description,
+            'description': 'Descripción'
+        }
     }
 
     # other names used for the same question type
