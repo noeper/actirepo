@@ -10,6 +10,13 @@ from actirepo.moodle.truefalse import TrueFalse
 from actirepo.moodle.ddimageortext import DDImageOrText
 from actirepo.moodle.ddmarker import DDMarker
 from actirepo.moodle.essay import Essay
+from actirepo.moodle.cloze import Cloze
+from actirepo.moodle.matching import Matching
+from actirepo.moodle.numerical import Numerical
+from actirepo.moodle.ddwtos import DDWtoS
+from actirepo.moodle.gapselect import GapSelect
+from actirepo.moodle.ordering import Ordering
+from actirepo.moodle.description import Description
 from actirepo.moodle.stats import Stats
 
 class Quiz():
@@ -43,18 +50,39 @@ class Quiz():
             'class': Essay,
             'description': 'Ensayo'
         },
-        #'numerical': {
-        #    'class', Numeric,
-        #    'description': 'Numérico'
-        #},
-        #'matching': {
-        #    'class': Matching,
-        #    'description': 'Emparejamiento'
-        #},
-        #'cloze': {
-        #    'class': Cloze,
-        #    'description': 'Asociar'
-        #}
+        'cloze': {
+            'class': Cloze,
+            'description': 'Respuestas anidadas (Cloze)'
+        },
+        'numerical': {
+            'class': Numerical,
+            'description': 'Numérico'
+        },
+        'matching': {
+            'class': Matching,
+            'description': 'Emparejamiento'
+        },
+        'ddwtos': {
+            'class': DDWtoS,
+            'description': 'Arrastrar y soltar sobre texto'
+        },
+        'gapselect': {
+            'class': GapSelect,
+            'description': 'Seleccionar palabras faltantes'
+        },
+        'ordering': {
+            'class': Ordering,
+            'description': 'Ordenación'
+        },
+        'description': {
+            'class': Description,
+            'description': 'Descripción'
+        }
+    }
+
+    # other names used for the same question type
+    QUESTION_ALIASES = {
+        'multianswer': 'cloze'
     }
 
     def __init__(self, quizfile):
@@ -79,6 +107,7 @@ class Quiz():
         for element in self.root.findall('question'):
             # get question type
             type = element.get('type')
+            type = self.QUESTION_ALIASES.get(type, type)
             # skip if question type is not supported
             if not type in self.SUPPORTED_QUESTIONS.keys():
                 continue

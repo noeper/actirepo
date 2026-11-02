@@ -11,6 +11,9 @@ import base64
 from html2image import Html2Image
 from PIL import Image
 
+# screenshot size: tall enough for long questions (transparent space is cropped later)
+SCREENSHOT_SIZE = (1920, 6000)
+
 def html2png(html, destination_dir, img_file):
     """
     Render html to png image
@@ -27,7 +30,7 @@ def html2png(html, destination_dir, img_file):
 )
     hti.output_path = destination_dir
     with open(os.devnull, 'w') as devnull, contextlib.redirect_stdout(devnull):
-        img_file = hti.screenshot(html_str=html, save_as=img_file)[0]
+        img_file = hti.screenshot(html_str=html, save_as=img_file, size=SCREENSHOT_SIZE)[0]
     im = Image.open(img_file)
     im = im.crop(im.getbbox())
     im.save(img_file)

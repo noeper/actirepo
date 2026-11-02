@@ -21,11 +21,11 @@ class Question(ABC):
         self.element = element
         self.type = self.element.get('type')
         self.name = self.element.find('name').find('text').text
-        self.statement = self.__process_text(self.element.find('questiontext'))
+        self.statement = self._process_text(self.element.find('questiontext'))
         self.answers = [ answer.text for answer in element.findall('answer') ]
         self.image_filename = None
 
-    def __process_text(self, element):
+    def _process_text(self, element):
         """
         Process text in question element
         - element: question element
